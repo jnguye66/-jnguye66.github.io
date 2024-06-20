@@ -3,10 +3,11 @@ import CardDisplay from './CardDisplay.jsx';
 import getCardList from '../functions/getCardData.js';
 
 function CardSearch() {
-    // Stores the entire card list api data
+    // useState to store the entire card list api data
     const [cardList, setCardList] = useState([]);
 
-    const [name, setName] = useState('');
+    // useState to store the users selected card
+    const [card, setCard] = useState({});
 
     // useEffect to populate the Card List once at initial launch
     useEffect(() => {
@@ -34,26 +35,34 @@ function CardSearch() {
         e.preventDefault();
 
         let input = document.getElementById('searchbar');
-        let name = input.value;
+        let cardName = input.value;
 
-        // display.setAttribute('name', name);
+        let cardImg = '';
 
-        console.log(name)
-        setName(name);
+        cardList.forEach((card) => {
+            if (cardName === `${card.name} - ${card.id.toUpperCase()}`){
+                cardImg = `${card.image}/high.png`;
+            }
+        })
+
+        setCard({
+            name: cardName,
+            img: cardImg
+        });
     }
 
     return (
         <>
-            <h2>Card List Display</h2>
+            <h2>Card Search</h2>
             <div>
                 <form>
-                    <h2>Search a Card</h2>
                     <input id="searchbar" name="searchbar" list='card-list'/>
                     <datalist id='card-list'></datalist>
                     <input type="submit" id="search" name="search" onClick={cardSubmit}/>
                 </form>
             </div>
-            <CardDisplay name={name}/>
+            <hr />
+            <CardDisplay name={card.name} img={card.img}/>
         </>
     )
 }

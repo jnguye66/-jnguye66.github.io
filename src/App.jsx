@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <h1>Pokemon Card Store</h1>
+      <h1>Pokemon Card Database</h1>
       <CardSearch/>
       <CardDisplay/>
     </>
