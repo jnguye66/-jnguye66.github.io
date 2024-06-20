@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 
-function CardSearch() {
-    const [cardList, setCardList] = useState([])
+import getCardList from '../functions/getCardData.js';
 
+function CardSearch() {
+    // Stores the entire card list api data
+    const [cardList, setCardList] = useState([]);
+    
     // useEffect to populate the Card List once at initial launch
     useEffect(() => {
-        const url = 'https://api.tcgdex.net/v2/en/cards';
-        
-
-        fetch(url)
-            .then(data => data.json())
+        // Grab card list data from API
+        getCardList()
             .then(result => setCardList(result));
 
         console.log(cardList);
@@ -19,8 +19,8 @@ function CardSearch() {
 
         cardList.forEach((card) => {
             let opt = document.createElement('option');
-            count++;
             if (card.image !== undefined) {
+                count++;
                 opt.id = card.id;
                 opt.value = `${count}: ${card.name} - ${card.id.toUpperCase()}`;
                 opt.textContent = opt.value;
