@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import CardDisplay from './CardDisplay.jsx';
 import getCardList from '../functions/getCardData.js';
 
+import CardContext from "../context/CardContext.js";
+
 function CardSearch() {
     // useState to store the entire card list api data
     const [cardList, setCardList] = useState([]);
@@ -31,6 +33,7 @@ function CardSearch() {
         })
     }, []);
 
+    // onClick function to give CardDisplay information 
     function cardSubmit(e) {
         e.preventDefault();
 
@@ -38,21 +41,24 @@ function CardSearch() {
         let cardName = input.value;
 
         let cardImg = '';
+        let cardID = '';
 
         cardList.forEach((card) => {
             if (cardName === `${card.name} - ${card.id.toUpperCase()}`){
+                cardID = card.id;
                 cardImg = `${card.image}/high.png`;
             }
-        })
+        });
 
         setCard({
+            id: cardID,
             name: cardName,
             img: cardImg
         });
     }
 
     return (
-        <>
+        <CardContext.Provider value={{card}}>
             <h2>Card Search</h2>
             <div>
                 <form>
@@ -62,8 +68,8 @@ function CardSearch() {
                 </form>
             </div>
             <hr />
-            <CardDisplay name={card.name} img={card.img}/>
-        </>
+            <CardDisplay />
+        </CardContext.Provider>
     )
 }
 

@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import CardContext from '../context/CardContext';
 
-function CardDisplay(props) {
+import '../styles/CardDisplay.css';
+
+function CardDisplay() {
+    const {card} = useContext(CardContext);
+
+    console.log(card)
     return (
-        <div>
-            <h3>{props.name}</h3>
-            <img src={props.img} alt={props.name} />
+        <div id='card-display'>
+            <h3>{card.name}</h3>
+            <img src={card.img} alt={card.name} />
         </div>
     )
 }
