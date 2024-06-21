@@ -31,4 +31,4 @@ TECHNOLOGIES USED:
 
 EXTERNAL LINKS:
 
-Netlify Launch - https://66750b97edca861f61351aa5--ptcg-deck-builder.netlify.app/
+Netlify Launch - https://66750eaf3b6b4b00083819cc--ptcg-deck-builder.netlify.app/
