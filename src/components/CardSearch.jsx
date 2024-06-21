@@ -15,6 +15,27 @@ const reducer = (state, action) => {
         case "delete":
             return state.slice(0, -1);
 
+        case "save":
+            // Array of card objects the user wants to save
+            let newData = state;
+
+            // Set localStorage to updated oldData
+            localStorage.setItem('cards', JSON.stringify(newData));
+            return;
+
+        case "load":
+            // Grab localStorage data
+            let oldData = localStorage.getItem('cards');
+            // Convert to JSON
+            let objData = JSON.parse(oldData)
+
+            let deckList = document.getElementById('deck-list');
+
+            objData.forEach((card) => {
+                deckList.appendChild(<li key={card.id}>{card.name}</li>)
+            })
+            return;
+
         default:
             return state;
     }
@@ -33,8 +54,6 @@ function CardSearch() {
         // Grab card list data from API
         getCardList()
             .then(result => setCardList(result));
-
-        console.log(cardList);
 
         let list = document.getElementById('card-list');
 
@@ -74,10 +93,6 @@ function CardSearch() {
         });
     }
 
-    // function stateToList(card) {
-    //     return <li key="{card.id}">{card.name}</li>
-    // }
-
     return (
         <CardContext.Provider value={{ card }}>
             <h2>Card Search</h2>
@@ -96,12 +111,16 @@ function CardSearch() {
             <h3>Deck List</h3>
 
             <ul id="deck-list">
-                {state.map(card => 
+                {state?.map(card => 
                     <li key={card.id}>{card.name}</li>
                 )}
             </ul>
 
             <button id="removeBtn" onClick={() => dispatch({ type: 'delete' })}>Delete Card</button>
+
+            <button id="saveBtn" onClick={() => dispatch({ type: 'save' })}>Save Deck</button>
+
+            
         </CardContext.Provider>
     )
 }
