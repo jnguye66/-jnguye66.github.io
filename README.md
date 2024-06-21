@@ -1,8 +1,30 @@
-# React + Vite
+# Pokemon TCG Deck Building App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CREATOR: John Nguyen
+DATE: June 6th, 2024
 
-Currently, two official plugins are available:
+--------------------------------------------------------------------
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+DESCRIPTION:
+
+This web application allows the player to look up Pokemon Cards using the TCGdex API. When the user selects a card, they are able to view some information about it.
+
+Current Functionalities:
+ - Search up cards
+ - Add cards to a deck list
+ - Save deck list (to localStorage)
+ - Load deck list (from localStorage)
+ - Delete cards from deck list
+
+--------------------------------------------------------------------
+
+TECHNOLOGIES USED: 
+ - Visual Studio Code
+ - GitBash
+ - Javascript
+ - JSX
+ - HTML
+ - CSS
+ - React
+
+--------------------------------------------------------------------
