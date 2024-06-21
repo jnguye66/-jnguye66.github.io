@@ -28,3 +28,7 @@ TECHNOLOGIES USED:
  - React
 
 --------------------------------------------------------------------
+
+EXTERNAL LINKS:
+
+Netlify Launch - https://66750b97edca861f61351aa5--ptcg-deck-builder.netlify.app/
