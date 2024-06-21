@@ -88,11 +88,16 @@ function CardSearch() {
 
         let data = JSON.stringify(cardInfo);
         let obj = JSON.parse(data);
+        console.log(obj.weaknesses)
 
         setCardInfo({
             id: obj.id,
             name: obj.name,
             rarity: obj.rarity,
+            hp: obj.hp,
+            attacks: obj.attacks,
+            weaknesses: obj.weaknesses,
+            illustrator: obj.illustrator
         })
     }
 
