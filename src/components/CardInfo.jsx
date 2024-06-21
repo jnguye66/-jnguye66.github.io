@@ -1,29 +1,16 @@
-import { useReducer, useEffect } from 'react';
+import { useContext } from 'react';
+import CardContext from '../context/CardContext';
 
-const initialState = {
-    id: '',
-    image: '',
-    illustrator: '',
-    rarity: '',
-    set: {
-        cardCount: {
-            official: 0,
-            total: 0
-        },
-        id: '',
-        name: ''
-    },
-    hp: 0,
-    types: [''],
-}
 
-// const reducer = (state, action) => {
-
-// }
 
 function CardInfo() {
+    const {card} = useContext(CardContext);
+
     return (
-        <div>CardInfo</div>
+        <div>
+            <h3>Card Information</h3>
+            
+        </div>
     )
 }
 

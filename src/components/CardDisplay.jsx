@@ -5,8 +5,7 @@ import '../styles/CardDisplay.css';
 
 function CardDisplay() {
     const {card} = useContext(CardContext);
-
-    console.log(card)
+    
     return (
         <div id='card-display'>
             <h3>{card.name}</h3>
