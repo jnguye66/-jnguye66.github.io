@@ -5,6 +5,7 @@ import getCardList from '../functions/getCardData.js';
 import CardInfo from "./CardInfo.jsx";
 
 import CardContext from "../context/CardContext.js";
+import CardInfoContext from "../context/CardInfoContext.js";
 
 // Reducer function
 const reducer = (state, action) => {
@@ -27,13 +28,20 @@ const reducer = (state, action) => {
             // Grab localStorage data
             let oldData = localStorage.getItem('cards');
             // Convert to JSON
-            let objData = JSON.parse(oldData)
+            let objData = JSON.parse(oldData);
+            // console.log(oldData)
 
             let deckList = document.getElementById('deck-list');
 
-            objData.forEach((card) => {
-                deckList.appendChild(<li key={card.id}>{card.name}</li>)
-            })
+            if(deckList.children.length !== objData.length){
+                objData.forEach((card) => {
+                    let li = document.createElement('li');
+                    li.setAttribute('key', card.id);
+                    li.innerHTML = card.name;
+    
+                    deckList.appendChild(li);
+                })
+            }
             return;
 
         default:
@@ -44,6 +52,8 @@ const reducer = (state, action) => {
 function CardSearch() {
     // useState to store the entire card list api data
     const [cardList, setCardList] = useState([]);
+    // useState to store the information for an individual card
+    const [cardInfo, setCardInfo] = useState({});
     // useState to store the users selected card
     const [card, setCard] = useState({});
 
@@ -69,6 +79,23 @@ function CardSearch() {
         })
     }, []);
 
+    function updateInfo(id){
+        const url = `https://api.tcgdex.net/v2/en/cards/${id}`;
+
+        fetch(url)
+            .then(data => data.json())
+            .then(result => setCardInfo(result));
+
+        let data = JSON.stringify(cardInfo);
+        let obj = JSON.parse(data);
+
+        setCardInfo({
+            id: obj.id,
+            name: obj.name,
+            rarity: obj.rarity,
+        })
+    }
+
     // onClick function to give CardDisplay information 
     function cardSubmit(e) {
         e.preventDefault();
@@ -79,8 +106,10 @@ function CardSearch() {
         let cardImg = '';
         let cardID = '';
 
+
         cardList.forEach((card) => {
             if (cardName === `${card.name} - ${card.id.toUpperCase()}`) {
+                updateInfo(card.id);
                 cardID = card.id;
                 cardImg = `${card.image}/high.png`;
             }
@@ -105,13 +134,15 @@ function CardSearch() {
             </div>
             <hr />
             <CardDisplay />
-            <button id="nextBtn" onClick={() => dispatch({ type: 'add', data: {id: card.id, name: card.name} })}>Add to Deck</button>
-            <CardInfo />
+            <button id="nextBtn" onClick={() => {dispatch({ type: 'add', data: { id: card.id, name: card.name } });}}>Add to Deck</button>
+            <CardInfoContext.Provider value={{cardInfo}}>
+                <CardInfo />
+            </CardInfoContext.Provider>
             <hr />
             <h3>Deck List</h3>
 
             <ul id="deck-list">
-                {state?.map(card => 
+                {state?.map(card =>
                     <li key={card.id}>{card.name}</li>
                 )}
             </ul>
@@ -120,7 +151,7 @@ function CardSearch() {
 
             <button id="saveBtn" onClick={() => dispatch({ type: 'save' })}>Save Deck</button>
 
-            
+            <button id="loadBtn" onClick={() => dispatch({ type: 'load' })}>Load Deck</button>
         </CardContext.Provider>
     )
 }
