@@ -74,6 +74,10 @@ function CardSearch() {
         });
     }
 
+    // function stateToList(card) {
+    //     return <li key="{card.id}">{card.name}</li>
+    // }
+
     return (
         <CardContext.Provider value={{ card }}>
             <h2>Card Search</h2>
@@ -86,12 +90,16 @@ function CardSearch() {
             </div>
             <hr />
             <CardDisplay />
-            <button id="nextBtn" onClick={() => dispatch({ type: 'add', data: card.name })}>Add to Deck</button>
+            <button id="nextBtn" onClick={() => dispatch({ type: 'add', data: {id: card.id, name: card.name} })}>Add to Deck</button>
             <CardInfo />
             <hr />
-            <h3>Desk List</h3>
+            <h3>Deck List</h3>
 
-            {JSON.stringify(state)}
+            <ul id="deck-list">
+                {state.map(card => 
+                    <li key={card.id}>{card.name}</li>
+                )}
+            </ul>
 
             <button id="removeBtn" onClick={() => dispatch({ type: 'delete' })}>Delete Card</button>
         </CardContext.Provider>
