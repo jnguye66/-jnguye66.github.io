@@ -33,12 +33,12 @@ const reducer = (state, action) => {
 
             let deckList = document.getElementById('deck-list');
 
-            if(deckList.children.length !== objData.length){
+            if (deckList.children.length !== objData.length) {
                 objData.forEach((card) => {
                     let li = document.createElement('li');
                     li.setAttribute('key', card.id);
                     li.innerHTML = card.name;
-    
+
                     deckList.appendChild(li);
                 })
             }
@@ -48,6 +48,8 @@ const reducer = (state, action) => {
             return state;
     }
 }
+
+
 
 function CardSearch() {
     // useState to store the entire card list api data
@@ -59,12 +61,7 @@ function CardSearch() {
 
     const [state, dispatch] = useReducer(reducer, []);
 
-    // useEffect to populate the Card List once at initial launch
-    useEffect(() => {
-        // Grab card list data from API
-        getCardList()
-            .then(result => setCardList(result));
-
+    function initialLoad() {
         let list = document.getElementById('card-list');
 
         cardList.forEach((card) => {
@@ -77,9 +74,18 @@ function CardSearch() {
 
             list.appendChild(opt);
         })
-    }, []);
+    }
 
-    function updateInfo(id){
+    // useEffect to populate the Card List once at initial launch
+    useEffect(() => {
+        // Grab card list data from API
+        getCardList()
+            .then(result => setCardList(result));
+
+        initialLoad();
+    }, [initialLoad]);
+
+    function updateInfo(id) {
         const url = `https://api.tcgdex.net/v2/en/cards/${id}`;
 
         fetch(url)
@@ -139,8 +145,8 @@ function CardSearch() {
             </div>
             <hr />
             <CardDisplay />
-            <button id="nextBtn" onClick={() => {dispatch({ type: 'add', data: { id: card.id, name: card.name } });}}>Add to Deck</button>
-            <CardInfoContext.Provider value={{cardInfo}}>
+            <button id="nextBtn" onClick={() => { dispatch({ type: 'add', data: { id: card.id, name: card.name } }); }}>Add to Deck</button>
+            <CardInfoContext.Provider value={{ cardInfo }}>
                 <CardInfo />
             </CardInfoContext.Provider>
             <hr />
